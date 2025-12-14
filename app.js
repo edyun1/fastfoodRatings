@@ -15,6 +15,11 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use((req, res, next) => {
+  res.locals.logoToken = process.env.LOGO_DEV_TOKEN || "";
+  next();
+});
+
 app.use("/restaurants", restaurantsRouter);
 app.use("/api", apiRouter);
 
@@ -23,9 +28,8 @@ app.get("/", (req, res) => {
 });
 
 async function start() {
-  if (!process.env.MONGODB_URI) throw new Error("Missing MONGODB_URI in environment");
+  if (!process.env.MONGODB_URI) throw new Error("Missing MONGODB_URI");
   await mongoose.connect(process.env.MONGODB_URI);
-
   const port = process.env.PORT || 5000;
   app.listen(port, () => console.log(`Listening on ${port}`));
 }

@@ -3,7 +3,6 @@ const axios = require("axios");
 
 const router = express.Router();
 
-// GET /api/weather?city=College%20Park&state=MD
 router.get("/weather", async (req, res) => {
   const { city, state } = req.query;
   if (!city || !state) return res.status(400).json({ error: "city and state required" });

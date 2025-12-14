@@ -1,23 +1,30 @@
 <%- include("../partials/header") %>
-<h2>Add a Fast Food Location</h2>
 
-<form method="POST" action="/restaurants" class="card">
-  <label>Chain</label>
-  <input name="chain" placeholder="McDonald's" required />
+<h2>Add a Location</h2>
 
-  <label>Location Name</label>
-  <input name="locationName" placeholder="College Park" required />
+<div class="panel">
+  <form method="POST" action="/restaurants" class="form">
+    <label>Chain</label>
+    <select name="chain" required>
+      <% chains.forEach(c => { %>
+        <option value="<%= c.chain %>"><%= c.chain %></option>
+      <% }) %>
+    </select>
 
-  <label>Address (optional)</label>
-  <input name="address" placeholder="123 Main St" />
+    <label>Location Name</label>
+    <input name="locationName" required />
 
-  <label>City</label>
-  <input name="city" required />
+    <label>City</label>
+    <input name="city" required />
 
-  <label>State</label>
-  <input name="state" required />
+    <label>State</label>
+    <input name="state" required />
 
-  <button type="submit">Create</button>
-</form>
+    <label>Address (optional)</label>
+    <input name="address" />
+
+    <button type="submit">Create</button>
+  </form>
+</div>
 
 <%- include("../partials/footer") %>

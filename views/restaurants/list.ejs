@@ -1,16 +1,29 @@
 <%- include("../partials/header") %>
-<h2>Locations</h2>
+
+<section class="hero">
+  <h1>Locations</h1>
+  <form class="search" method="GET" action="/restaurants">
+    <input name="q" value="<%= q %>" placeholder="Search chain, city, state, location..." />
+    <button type="submit">Search</button>
+    <a class="btn subtle" href="/restaurants/new">+ Add</a>
+  </form>
+</section>
 
 <% if (restaurants.length === 0) { %>
-  <div class="card">No locations yet. Add one!</div>
+  <div class="panel">No locations found.</div>
 <% } %>
 
-<% restaurants.forEach(r => { %>
-  <div class="card">
-    <div><strong><%= r.chain %></strong> — <%= r.locationName %></div>
-    <div><%= r.city %>, <%= r.state %></div>
-    <a href="/restaurants/<%= r._id %>">Open</a>
-  </div>
-<% }) %>
+<div class="grid">
+  <% restaurants.forEach(r => { %>
+    <a class="card card-link" href="/restaurants/<%= r._id %>">
+      <img class="logo" src="https://img.logo.dev/<%= r.domain %>?token=<%= logoToken %>" alt="<%= r.chain %> logo">
+      <div>
+        <div class="title"><%= r.chain %></div>
+        <div class="sub"><%= r.locationName %></div>
+        <div class="tiny"><%= r.city %>, <%= r.state %></div>
+      </div>
+    </a>
+  <% }) %>
+</div>
 
 <%- include("../partials/footer") %>

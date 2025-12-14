@@ -1,23 +1,25 @@
 <%- include("../partials/header") %>
-<h2>Rate: <%= restaurant.chain %> — <%= restaurant.locationName %></h2>
 
-<form method="POST" action="/restaurants/<%= restaurant._id %>/ratings" class="card">
-  <label>Rating</label>
-  <select name="rating" required>
-    <option value="5">5</option>
-    <option value="4">4</option>
-    <option value="3">3</option>
-    <option value="2">2</option>
-    <option value="1">1</option>
-  </select>
+<h2>Rate</h2>
 
-  <label>Title</label>
-  <input name="title" required />
+<div class="panel">
+  <div class="title"><%= restaurant.chain %></div>
+  <div class="sub"><%= restaurant.locationName %></div>
+  <div class="tiny"><%= restaurant.city %>, <%= restaurant.state %></div>
+</div>
 
-  <label>Details</label>
-  <textarea name="body" rows="5" required></textarea>
-
-  <button type="submit">Submit</button>
-</form>
+<div class="panel">
+  <form method="POST" action="/restaurants/<%= restaurant._id %>/ratings" class="form">
+    <label>Rating</label>
+    <select name="rating" required>
+      <option value="5">5</option>
+      <option value="4">4</option>
+      <option value="3">3</option>
+      <option value="2">2</option>
+      <option value="1">1</option>
+    </select>
+    <button type="submit">Submit Rating</button>
+  </form>
+</div>
 
 <%- include("../partials/footer") %>

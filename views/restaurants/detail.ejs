@@ -1,26 +1,37 @@
 <%- include("../partials/header") %>
 
-<h2><%= restaurant.chain %> — <%= restaurant.locationName %></h2>
-<p><%= restaurant.city %>, <%= restaurant.state %></p>
-
-<div class="card">
-  <div><strong>Average rating:</strong>
-    <%= avg === null ? "No ratings yet" : avg.toFixed(2) %>
+<div class="panel" style="display:flex; gap:12px; align-items:center;">
+  <img class="logo" src="https://img.logo.dev/<%= restaurant.domain %>?token=<%= logoToken %>" alt="<%= restaurant.chain %> logo">
+  <div>
+    <div class="title" style="font-size:20px;"><%= restaurant.chain %></div>
+    <div class="sub"><%= restaurant.locationName %></div>
+    <div class="tiny"><%= restaurant.city %>, <%= restaurant.state %></div>
   </div>
-  <a href="/restaurants/<%= restaurant._id %>/ratings/new">Write a rating</a>
 </div>
 
-<div id="weather" class="card">Loading weather...</div>
+<div class="panel">
+  <div class="sub">
+    Average rating:
+    <strong><%= avg === null ? "No ratings yet" : avg.toFixed(2) %></strong>
+    <span class="tiny">(<%= count %> total)</span>
+  </div>
+  <div style="margin-top:10px;">
+    <a class="btn" href="/restaurants/<%= restaurant._id %>/ratings/new">Rate this location</a>
+  </div>
+</div>
 
-<h3>Ratings</h3>
+<div id="weather" class="panel">Loading weather...</div>
+
+<h3>Recent ratings</h3>
+
 <% if (ratings.length === 0) { %>
-  <div class="card">No ratings yet.</div>
+  <div class="panel">No ratings yet.</div>
 <% } %>
 
 <% ratings.forEach(rt => { %>
-  <div class="card">
-    <div><strong><%= rt.rating %>/5</strong> — <%= rt.title %></div>
-    <div><%= rt.body %></div>
+  <div class="panel">
+    <div class="title"><%= rt.rating %>/5</div>
+    <div class="tiny"><%= new Date(rt.createdAt).toLocaleString() %></div>
   </div>
 <% }) %>
 
@@ -35,9 +46,9 @@
       }
       const c = data.current;
       el.innerHTML = `
-        <div><strong>Current Weather</strong></div>
-        <div>Temp: ${c.temperature_2m}°C</div>
-        <div>Wind: ${c.wind_speed_10m} km/h</div>
+        <div class="title">Current Weather</div>
+        <div class="sub">Temp: ${c.temperature_2m}°C</div>
+        <div class="sub">Wind: ${c.wind_speed_10m} km/h</div>
       `;
     })
     .catch(() => {

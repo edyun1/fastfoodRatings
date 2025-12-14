@@ -7,9 +7,7 @@ const RatingsSchema = new mongoose.Schema(
       ref: "Restaurants",
       required: true
     },
-    rating: { type: Number, required: true, min: 1, max: 5 },
-    title: { type: String, required: true, trim: true },
-    body: { type: String, required: true, trim: true }
+    rating: { type: Number, required: true, min: 1, max: 5 }
   },
   { timestamps: true }
 );
