@@ -4,8 +4,10 @@
   <img class="logo" src="https://img.logo.dev/<%= restaurant.domain %>?token=<%= logoToken %>" alt="<%= restaurant.chain %> logo">
   <div>
     <div class="title" style="font-size:20px;"><%= restaurant.chain %></div>
-    <div class="sub"><%= restaurant.locationName %></div>
-    <div class="tiny"><%= restaurant.city %>, <%= restaurant.state %></div>
+    <div class="sub"><%= restaurant.city %>, <%= restaurant.state %></div>
+    <% if (restaurant.address && restaurant.address.trim().length > 0) { %>
+      <div class="tiny"><%= restaurant.address %></div>
+    <% } %>
   </div>
 </div>
 
@@ -20,8 +22,6 @@
   </div>
 </div>
 
-<div id="weather" class="panel">Loading weather...</div>
-
 <h3>Recent ratings</h3>
 
 <% if (ratings.length === 0) { %>
@@ -34,26 +34,5 @@
     <div class="tiny"><%= new Date(rt.createdAt).toLocaleString() %></div>
   </div>
 <% }) %>
-
-<script>
-  fetch(`/api/weather?city=${encodeURIComponent("<%= restaurant.city %>")}&state=${encodeURIComponent("<%= restaurant.state %>")}`)
-    .then(r => r.json())
-    .then(data => {
-      const el = document.getElementById("weather");
-      if (!data || data.error || !data.current) {
-        el.textContent = "Weather unavailable.";
-        return;
-      }
-      const c = data.current;
-      el.innerHTML = `
-        <div class="title">Current Weather</div>
-        <div class="sub">Temp: ${c.temperature_2m}°C</div>
-        <div class="sub">Wind: ${c.wind_speed_10m} km/h</div>
-      `;
-    })
-    .catch(() => {
-      document.getElementById("weather").textContent = "Weather unavailable.";
-    });
-</script>
 
 <%- include("../partials/footer") %>

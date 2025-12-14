@@ -4,21 +4,18 @@
 
 <div class="panel">
   <form method="POST" action="/restaurants" class="form">
-    <label>Chain</label>
+    <label>Restaurant</label>
     <select name="chain" required>
       <% chains.forEach(c => { %>
         <option value="<%= c.chain %>"><%= c.chain %></option>
       <% }) %>
     </select>
 
-    <label>Location Name</label>
-    <input name="locationName" required />
-
     <label>City</label>
     <input name="city" required />
 
-    <label>State</label>
-    <input name="state" required />
+    <label>State (2 letters)</label>
+    <input name="state" maxlength="2" minlength="2" pattern="[A-Za-z]{2}" required />
 
     <label>Address (optional)</label>
     <input name="address" />

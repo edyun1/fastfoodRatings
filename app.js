@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const path = require("path");
 
 const restaurantsRouter = require("./routes/restaurants");
-const apiRouter = require("./routes/api");
 
 const app = express();
 
@@ -21,7 +20,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/restaurants", restaurantsRouter);
-app.use("/api", apiRouter);
 
 app.get("/", (req, res) => {
   res.render("index");

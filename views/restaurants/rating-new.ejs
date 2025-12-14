@@ -4,8 +4,10 @@
 
 <div class="panel">
   <div class="title"><%= restaurant.chain %></div>
-  <div class="sub"><%= restaurant.locationName %></div>
-  <div class="tiny"><%= restaurant.city %>, <%= restaurant.state %></div>
+  <div class="sub"><%= restaurant.city %>, <%= restaurant.state %></div>
+  <% if (restaurant.address && restaurant.address.trim().length > 0) { %>
+    <div class="tiny"><%= restaurant.address %></div>
+  <% } %>
 </div>
 
 <div class="panel">

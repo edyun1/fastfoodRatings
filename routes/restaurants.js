@@ -23,7 +23,6 @@ router.get("/", async (req, res) => {
     ? {
         $or: [
           { chain: new RegExp(q, "i") },
-          { locationName: new RegExp(q, "i") },
           { city: new RegExp(q, "i") },
           { state: new RegExp(q, "i") }
         ]
@@ -39,18 +38,23 @@ router.get("/new", (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { chain, locationName, city, state, address } = req.body;
+  const { chain, city, state, address } = req.body;
   const found = CHAINS.find((c) => c.chain === chain);
 
   await Restaurants.create({
     chain,
     domain: found ? found.domain : "example.com",
-    locationName,
-    city,
-    state,
-    address: address || ""
+    city: (city || "").trim(),
+    state: (state || "").trim().toUpperCase(),
+    address: (address || "").trim()
   });
 
+  res.redirect("/restaurants");
+});
+
+router.post("/clear", async (req, res) => {
+  await Restaurants.deleteMany({});
+  await Ratings.deleteMany({});
   res.redirect("/restaurants");
 });
 

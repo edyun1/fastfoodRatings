@@ -3,9 +3,13 @@
 <section class="hero">
   <h1>Locations</h1>
   <form class="search" method="GET" action="/restaurants">
-    <input name="q" value="<%= q %>" placeholder="Search chain, city, state, location..." />
+    <input name="q" value="<%= q %>" placeholder="Search restaurant, city, state..." />
     <button type="submit">Search</button>
     <a class="btn subtle" href="/restaurants/new">+ Add</a>
+  </form>
+
+  <form method="POST" action="/restaurants/clear" style="margin-top:10px;">
+    <button type="submit">Reset Database</button>
   </form>
 </section>
 
@@ -19,8 +23,10 @@
       <img class="logo" src="https://img.logo.dev/<%= r.domain %>?token=<%= logoToken %>" alt="<%= r.chain %> logo">
       <div>
         <div class="title"><%= r.chain %></div>
-        <div class="sub"><%= r.locationName %></div>
-        <div class="tiny"><%= r.city %>, <%= r.state %></div>
+        <div class="sub"><%= r.city %>, <%= r.state %></div>
+        <% if (r.address && r.address.trim().length > 0) { %>
+          <div class="tiny"><%= r.address %></div>
+        <% } %>
       </div>
     </a>
   <% }) %>
