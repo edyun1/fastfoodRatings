@@ -1,0 +1,48 @@
+<%- include("../partials/header") %>
+
+<h2><%= restaurant.chain %> — <%= restaurant.locationName %></h2>
+<p><%= restaurant.city %>, <%= restaurant.state %></p>
+
+<div class="card">
+  <div><strong>Average rating:</strong>
+    <%= avg === null ? "No ratings yet" : avg.toFixed(2) %>
+  </div>
+  <a href="/restaurants/<%= restaurant._id %>/ratings/new">Write a rating</a>
+</div>
+
+<div id="weather" class="card">Loading weather...</div>
+
+<h3>Ratings</h3>
+<% if (ratings.length === 0) { %>
+  <div class="card">No ratings yet.</div>
+<% } %>
+
+<% ratings.forEach(rt => { %>
+  <div class="card">
+    <div><strong><%= rt.rating %>/5</strong> — <%= rt.title %></div>
+    <div><%= rt.body %></div>
+  </div>
+<% }) %>
+
+<script>
+  fetch(`/api/weather?city=${encodeURIComponent("<%= restaurant.city %>")}&state=${encodeURIComponent("<%= restaurant.state %>")}`)
+    .then(r => r.json())
+    .then(data => {
+      const el = document.getElementById("weather");
+      if (!data || data.error || !data.current) {
+        el.textContent = "Weather unavailable.";
+        return;
+      }
+      const c = data.current;
+      el.innerHTML = `
+        <div><strong>Current Weather</strong></div>
+        <div>Temp: ${c.temperature_2m}°C</div>
+        <div>Wind: ${c.wind_speed_10m} km/h</div>
+      `;
+    })
+    .catch(() => {
+      document.getElementById("weather").textContent = "Weather unavailable.";
+    });
+</script>
+
+<%- include("../partials/footer") %>

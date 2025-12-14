@@ -1,0 +1,16 @@
+<%- include("../partials/header") %>
+<h2>Locations</h2>
+
+<% if (restaurants.length === 0) { %>
+  <div class="card">No locations yet. Add one!</div>
+<% } %>
+
+<% restaurants.forEach(r => { %>
+  <div class="card">
+    <div><strong><%= r.chain %></strong> — <%= r.locationName %></div>
+    <div><%= r.city %>, <%= r.state %></div>
+    <a href="/restaurants/<%= r._id %>">Open</a>
+  </div>
+<% }) %>
+
+<%- include("../partials/footer") %>

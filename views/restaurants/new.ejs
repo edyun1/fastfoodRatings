@@ -1,0 +1,23 @@
+<%- include("../partials/header") %>
+<h2>Add a Fast Food Location</h2>
+
+<form method="POST" action="/restaurants" class="card">
+  <label>Chain</label>
+  <input name="chain" placeholder="McDonald's" required />
+
+  <label>Location Name</label>
+  <input name="locationName" placeholder="College Park" required />
+
+  <label>Address (optional)</label>
+  <input name="address" placeholder="123 Main St" />
+
+  <label>City</label>
+  <input name="city" required />
+
+  <label>State</label>
+  <input name="state" required />
+
+  <button type="submit">Create</button>
+</form>
+
+<%- include("../partials/footer") %>
